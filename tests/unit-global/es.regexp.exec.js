@@ -68,6 +68,18 @@ if (DESCRIPTORS) {
     assert.same(re.lastIndex, 0, '#16');
   });
 
+  QUnit.test("Sticky with NPCG", function (assert) {
+    const text = "apple banana cherry";
+    const regex = new RegExp('(?:apple|banana|cherry)', 'y');
+
+    regex.lastIndex = 0;
+    const match = regex.exec(text);
+
+    assert.ok(match, "Regex matched something");
+    assert.equal(match[0], "apple", "Matched 'apple' correctly");
+    assert.equal(regex.lastIndex, 5, "lastIndex updated correctly after match");
+  });
+
   QUnit.test('RegExp#exec sticky anchored', assert => {
     const regex = new RegExp('^foo', 'y');
     assert.deepEqual(regex.exec('foo'), ['foo'], '#1');
